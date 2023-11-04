@@ -1,0 +1,183 @@
+Design and Develop SQL DDL statements which demonstrate the use of SQL objects such
+as Table, View, Index, Sequence, Synonym, different constraints etc
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| d                  |
+| db                 |
+| de                 |
+| department         |
+| ed                 |
+| fi                 |
+| fifth              |
+| five               |
+| information_schema |
+| myprocedure        |
+| mysql              |
+| ni                 |
+| nil                |
+| performance_schema |
+| prac01             |
+| prac1              |
+| pract1             |
+| practi             |
+| proc_grade         |
+| sp                 |
+| srush              |
+| srushti            |
+| srushtis           |
+| sys                |
++--------------------+
+24 rows in set (0.00 sec)
+
+mysql> CREATE DATABASE PRACTICAL1;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> USE PRACTICAL1;
+Database changed
+mysql> CREATE TABLE STUD(RNO INT PRIMARY KEY AUTO_INCREMENT,NAME VARCHAR(20),MARKS INT);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DESC STUD;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| RNO   | int         | NO   | PRI | NULL    | auto_increment |
+| NAME  | varchar(20) | YES  |     | NULL    |                |
+| MARKS | int         | YES  |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STUD MODIFY MARKS INT NOT NULL;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC STUD;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| RNO   | int         | NO   | PRI | NULL    | auto_increment |
+| NAME  | varchar(20) | YES  |     | NULL    |                |
+| MARKS | int         | NO   |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO STUD VALUES(1,"ARYA",88),(2,"SHAM",91),(3,"TINA",97);
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM STUD;
++-----+------+-------+
+| RNO | NAME | MARKS |
++-----+------+-------+
+|   1 | ARYA |    88 |
+|   2 | SHAM |    91 |
+|   3 | TINA |    97 |
++-----+------+-------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE STUD SET MARKS=93 WHERE RNO=1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM STUD;
++-----+------+-------+
+| RNO | NAME | MARKS |
++-----+------+-------+
+|   1 | ARYA |    93 |
+|   2 | SHAM |    91 |
+|   3 | TINA |    97 |
++-----+------+-------+
+3 rows in set (0.00 sec)
+
+mysql> DELETE FROM STUD WHERE RNO=3;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> CREATE VIEW V1 AS SELECT NAME,RNO FROM STUD WHERE RNO=3;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM V1;
+Empty set (0.00 sec)
+
+mysql> SELECT VIEW FROM V1;
+ERROR 1054 (42S22): Unknown column 'VIEW' in 'field list'
+mysql> SELECT * FROM V1;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO STUD VALUES(4,"RIYA",93);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM STUD;
++-----+------+-------+
+| RNO | NAME | MARKS |
++-----+------+-------+
+|   1 | ARYA |    93 |
+|   2 | SHAM |    91 |
+|   4 | RIYA |    93 |
++-----+------+-------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE VIEW V1 AS SELECT NAME,RNO FROM STUD WHERE RNO=4;
+ERROR 1050 (42S01): Table 'V1' already exists
+mysql> CREATE VIEW V2 AS SELECT NAME,RNO FROM STUD WHERE RNO=4;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM V2;
++------+-----+
+| NAME | RNO |
++------+-----+
+| RIYA |   4 |
++------+-----+
+1 row in set (0.00 sec)
+
+mysql> CREATE INDEX I1 ON STUD(NAME);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SHOW INDEX ON STUD;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ON STUD' at line 1
+mysql> SHOW INDEX FROM STUD;
++-------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++-------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| stud  |          0 | PRIMARY  |            1 | RNO         | A         |           3 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| stud  |          1 | I1       |            1 | NAME        | A         |           3 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
++-------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO STUD VALUES(NULL,"SIA",82);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM STUD;
++-----+------+-------+
+| RNO | NAME | MARKS |
++-----+------+-------+
+|   1 | ARYA |    93 |
+|   2 | SHAM |    91 |
+|   4 | RIYA |    93 |
+|   5 | SIA  |    82 |
++-----+------+-------+
+4 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STUD AUTO_INCREMENT=12;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO STUD VALUES(NULL,"KAVYA",67);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM STUD;
++-----+-------+-------+
+| RNO | NAME  | MARKS |
++-----+-------+-------+
+|   1 | ARYA  |    93 |
+|   2 | SHAM  |    91 |
+|   4 | RIYA  |    93 |
+|   5 | SIA   |    82 |
+|  12 | KAVYA |    67 |
++-----+-------+-------+
+5 rows in set (0.00 sec)
+
+mysql>
