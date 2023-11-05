@@ -1,0 +1,196 @@
+Write at least 10 SQL queries on the suitable database application using SQL DML
+statements
+
+
+mysql> CREATE DATABASE PRA2;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> USE PRA2;
+Database changed
+mysql> CREATE TABLE EMP(NO INT,NAME VARCHAR(20),JOIN_DATE DATE,SAL FLOAT);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> INSERT INTO EMP VALUES(101,"RAM","2023-02-12",4000),(102,"SHAM","2022-05-20",9000),(103,"REEMA","2023-07-28",1200
+0);
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM EMP;
++------+-------+------------+-------+
+| NO   | NAME  | JOIN_DATE  | SAL   |
++------+-------+------------+-------+
+|  101 | RAM   | 2023-02-12 |  4000 |
+|  102 | SHAM  | 2022-05-20 |  9000 |
+|  103 | REEMA | 2023-07-28 | 12000 |
++------+-------+------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT NAME,SAL FROM EMP;
++-------+-------+
+| NAME  | SAL   |
++-------+-------+
+| RAM   |  4000 |
+| SHAM  |  9000 |
+| REEMA | 12000 |
++-------+-------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE EMP SET SAL=5000 WHERE NO=101;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM EMP WHERE SAL=12000;
++------+-------+------------+-------+
+| NO   | NAME  | JOIN_DATE  | SAL   |
++------+-------+------------+-------+
+|  103 | REEMA | 2023-07-28 | 12000 |
++------+-------+------------+-------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM EMP WHERE SAL>8000;
++------+-------+------------+-------+
+| NO   | NAME  | JOIN_DATE  | SAL   |
++------+-------+------------+-------+
+|  102 | SHAM  | 2022-05-20 |  9000 |
+|  103 | REEMA | 2023-07-28 | 12000 |
++------+-------+------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> DELETE FROM EMP WHERE NO=101;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM EMP;
++------+-------+------------+-------+
+| NO   | NAME  | JOIN_DATE  | SAL   |
++------+-------+------------+-------+
+|  102 | SHAM  | 2022-05-20 |  9000 |
+|  103 | REEMA | 2023-07-28 | 12000 |
++------+-------+------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMP VALUES(104,"TINA","2022-04-24",2000),(105,"MAYA","2023-06-15",10000);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM EMP;
++------+-------+------------+-------+
+| NO   | NAME  | JOIN_DATE  | SAL   |
++------+-------+------------+-------+
+|  102 | SHAM  | 2022-05-20 |  9000 |
+|  103 | REEMA | 2023-07-28 | 12000 |
+|  104 | TINA  | 2022-04-24 |  2000 |
+|  105 | MAYA  | 2023-06-15 | 10000 |
++------+-------+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT MIN(SAL) FROM EMP;
++----------+
+| MIN(SAL) |
++----------+
+|     2000 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MAX(SAL) FROM EMP;
++----------+
+| MAX(SAL) |
++----------+
+|    12000 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SUM(SAL) FROM EMP;
++----------+
+| SUM(SAL) |
++----------+
+|    33000 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT AVG(SAL) FROM EMP;
++----------+
+| AVG(SAL) |
++----------+
+|     8250 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(NO);
+ERROR 1054 (42S22): Unknown column 'NO' in 'field list'
+mysql> SELECT COUNT(NO) FROM EMP;
++-----------+
+| COUNT(NO) |
++-----------+
+|         4 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT LCASE
+    -> ^C
+mysql> SELECT LCASE(NO) FROM EMP;
++-----------+
+| LCASE(NO) |
++-----------+
+| 102       |
+| 103       |
+| 104       |
+| 105       |
++-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT UCASE(NO) FROM EMP;
++-----------+
+| UCASE(NO) |
++-----------+
+| 102       |
+| 103       |
+| 104       |
+| 105       |
++-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT UCASE(NAME) FROM EMP;
++-------------+
+| UCASE(NAME) |
++-------------+
+| SHAM        |
+| REEMA       |
+| TINA        |
+| MAYA        |
++-------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT LCASE(NAME) FROM EMP;
++-------------+
+| LCASE(NAME) |
++-------------+
+| sham        |
+| reema       |
+| tina        |
+| maya        |
++-------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT MID(NO,1,3) FROM EMP;
++-------------+
+| MID(NO,1,3) |
++-------------+
+| 102         |
+| 103         |
+| 104         |
+| 105         |
++-------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT MID(NO,2,3) FROM EMP;
++-------------+
+| MID(NO,2,3) |
++-------------+
+| 02          |
+| 03          |
+| 04          |
+| 05          |
++-------------+
+4 rows in set (0.00 sec)
+
+mysql>

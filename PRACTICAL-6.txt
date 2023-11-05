@@ -1,0 +1,70 @@
+Write a PL/SQL block of code using parameterized Cursor that will merge the data availablein
+the newly created table N_RollCall with the data available in the table O_RollCall. If the data in
+the first table already exist in the second table then that data should be skipped.
+
+Practical No:-06
+
+
+1)	Create Database nikhil
+
+
+2)	use nikhil;
+
+
+3)	Create N_RollCall table
+-> CREATE TABLE N_RollCall (
+RollNumber INT PRIMARY KEY, Name VARCHAR(25)
+);
+
+
+4)	Create O_RollCall table
+-> CREATE TABLE O_RollCall (
+RollNumber INT PRIMARY KEY, Name VARCHAR(25)
+);
+
+
+5)	Insert sample data into N_RollCall table
+-> INSERT INTO N_RollCall (RollNumber, Name) VALUES (1, 'nikhil'), (2, 'Mayur'), (3, 'Ritesh');
+
+6)	Insert sample data into O_RollCall table
+-> INSERT INTO O_RollCall (RollNumber, Name) VALUES (1, 'nikhil'), (4, 'Rahul'), (5, 'Chetan');
+ 
+
+7)	Create the Procedure
+-> DELIMITER //
+
+
+CREATE PROCEDURE MergeData() BEGIN
+
+DECLARE rln INT;
+DECLARE nm VARCHAR(25);
+
+
+-- Declare a cursor for N_RollCall
+DECLARE cur CURSOR FOR SELECT RollNumber, Name FROM N_RollCall;
+
+
+-- Open the cursor OPEN cur;
+
+-- Loop through the cursor read_loop: LOOP
+FETCH cur INTO rln, nm;
+
+
+
+
+-- Check if the data already exists in O_RollCall
+IF NOT EXISTS (SELECT 1 FROM O_RollCall WHERE RollNumber = rln AND Name = nm) THEN
+-- Insert the data into O_RollCall
+INSERT INTO O_RollCall (RollNumber, Name) VALUES (rln, nm); END IF;
+
+END LOOP;
+ 
+-- Close the cursor CLOSE cur;
+
+END //
+
+
+8)	Call procedure CALL MergeData();
+
+9)	Select data from O_RollCall to verify the merge SELECT * FROM O_RollCall;
+ 
